@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.coolweater.app.db.CoolWeatherOpenHelper;
 
@@ -39,7 +40,7 @@ public class CoolWeatherDB {
      * 获取CoolWeatherDB的实例
      */
     public synchronized static CoolWeatherDB getInstatce(Context context){
-        if (coolWeatherDB != null){
+        if (coolWeatherDB == null){
             coolWeatherDB = new CoolWeatherDB(context);
         }
         return coolWeatherDB;
@@ -70,7 +71,7 @@ public class CoolWeatherDB {
                 province.setProvinceName(cursor.getString(cursor.getColumnIndex("province_name")));
                 province.setProvinceCode(cursor.getString(cursor.getColumnIndex("province_code")));
                 list.add(province);
-            } while (cursor.moveToFirst());
+            } while (cursor.moveToNext());
         }
         return list;
     }
