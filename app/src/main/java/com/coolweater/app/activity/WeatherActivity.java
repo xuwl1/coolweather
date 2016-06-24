@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.coolweater.app.R;
+import com.coolweater.app.service.AutoUpdateService;
 import com.coolweater.app.util.HttpUtil;
 import com.coolweater.app.util.HttpcCallbackListener;
 import com.coolweater.app.util.Utility;
@@ -146,7 +147,6 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
                     }
                 } else if ("weatherCode".equals(type)){
                     //处理服务器返回的天气信息
-                    Log.d("test1", response);
                     Utility.handleWeatherResponse(WeatherActivity.this, response);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -182,5 +182,7 @@ public class WeatherActivity extends Activity implements View.OnClickListener {
         currentDateText.setText(prefs.getString("current_date", ""));
         weatherInfoLayout.setVisibility(View.VISIBLE);
         cityNameText.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        startService(intent);
     }
 }
